@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import { ApolloProvider } from '@apollo/client';
+import client from './ApolloClient';
+import RepoList from './RepoList';
 
-function App() {
+const App = () => {
+  const [username, setUsername] = useState('octocat'); // Default GitHub user
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div style={{display: "flex"}}>
+        <h1>Fetching GitHub Repositories - Using GraphQL-React-Query Demo</h1>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter GitHub username"
+        />
+        <RepoList username={username} />
+      </div>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;
